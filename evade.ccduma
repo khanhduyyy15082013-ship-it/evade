@@ -1,0 +1,86 @@
+local Rayfield = require(game.ReplicatedStorage:WaitForChild("Rayfield"))
+
+local Window = Rayfield:CreateWindow({
+    Name = "EV Menu"
+})
+
+local Main = Window:CreateTab("MAIN")
+local Event = Window:CreateTab("EVENT")
+local Player = Window:CreateTab("PLAYER")
+local Settings = Window:CreateTab("SETTING")
+
+Main:CreateToggle({
+    Name = "Auto Respawn",
+    CurrentValue = false,
+    Callback = function(v) end
+})
+
+Main:CreateButton({
+    Name = "Safe Spot",
+    Callback = function() end
+})
+
+Main:CreateSlider({
+    Name = "WalkSpeed",
+    Range = {1, 100},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(v) end
+})
+
+Main:CreateSlider({
+    Name = "JumpPower",
+    Range = {1, 100},
+    Increment = 1,
+    CurrentValue = 50,
+    Callback = function(v) end
+})
+
+Main:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Callback = function(v) end
+})
+
+Event:CreateToggle({
+    Name = "Auto Collect Event",
+    CurrentValue = false,
+    Callback = function(v) end
+})
+
+Event:CreateToggle({
+    Name = "ESP Event",
+    CurrentValue = false,
+    Callback = function(v) end
+})
+
+Player:CreateToggle({
+    Name = "Anti AFK",
+    CurrentValue = false,
+    Callback = function(v) end
+})
+
+Player:CreateButton({
+    Name = "Fly [ADD BUTTON]",
+    Callback = function() end
+})
+
+Player:CreateButton({
+    Name = "Noclip [ADD BUTTON]",
+    Callback = function() end
+})
+
+Player:CreateSlider({
+    Name = "FrontJump",
+    Range = {1, 55},
+    Increment = 0.5,
+    CurrentValue = 36,
+    Callback = function(v) end
+})
+
+Settings:CreateButton({
+    Name = "Hide Button",
+    Callback = function()
+        Rayfield:Destroy()
+    end
+})

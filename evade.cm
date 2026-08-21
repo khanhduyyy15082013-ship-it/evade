@@ -1,0 +1,94 @@
+local P = game:GetService("Players")
+local LP = P.LocalPlayer
+
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local W = Rayfield:CreateWindow({
+    Name = "EV Menu",
+    LoadingTitle = "EV Menu",
+    LoadingSubtitle = "Game"
+})
+
+local T = W:CreateTab("Main")
+
+local autoRespawn = false
+local autoCollect = false
+local speed = 16
+
+T:CreateToggle({
+    Name = "Auto Respawn",
+    CurrentValue = false,
+    Callback = function(v)
+        autoRespawn = v
+    end
+})
+
+T:CreateButton({
+    Name = "Safe Spot",
+    Callback = function()
+        local c = LP.Character
+        local r = c and c:FindFirstChild("HumanoidRootPart")
+        local s = workspace:FindFirstChild("SafeSpot")
+
+        if r and s then
+            r.CFrame = s.CFrame + Vector3.new(0, 3, 0)
+        end
+    end
+})
+
+T:CreateToggle({
+    Name = "Auto Collect Event",
+    CurrentValue = false,
+    Callback = function(v)
+        autoCollect = v
+    end
+})
+
+T:CreateSlider({
+    Name = "WalkSpeed",
+    Range = {8, 30},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(v)
+        speed = v
+        local c = LP.Character
+        local h = c and c:FindFirstChildOfClass("Humanoid")
+
+        if h then
+            h.WalkSpeed = v
+        end
+    end
+})
+
+LP.CharacterAdded:Connect(function(c)
+    local h = c:WaitForChild("Humanoid")
+
+    if autoRespawn then
+        h.WalkSpeed = speed
+    end
+end)
+
+task.spawn(function()
+    while task.wait(.2) do
+        if autoCollect then
+            local items = workspace:FindFirstChild("EventItems")
+            local c = LP.Character
+            local r = c and c:FindFirstChild("HumanoidRootPart")
+
+            if items and r then
+                for _, item in ipairs(items:GetChildren()) do
+                    if item:IsA("BasePart") then
+                        r.CFrame = item.CFrame + Vector3.new(0, 3, 0)
+                        task.wait(.1)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+Rayfield:Notify({
+    Title = "EV Menu",
+    Content = "Loaded",
+    Duration = 2
+})
